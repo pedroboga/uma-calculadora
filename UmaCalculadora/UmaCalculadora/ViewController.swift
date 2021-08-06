@@ -30,7 +30,6 @@ class ViewController: UIViewController {
                 labelResultado.text! += selecionado
             }
         }
-        
     }
     
     override func viewDidLoad() {
