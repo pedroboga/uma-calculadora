@@ -9,24 +9,28 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var total = 0
-    var operacao = ""
+    var total: Int = 0
+    var operacao: String = ""
+    var contaNova: Bool = false
     
     @IBOutlet weak var labelResultado: UILabel!
     @IBAction func btnCalc(_ sender: UIButton) {
         if let selecionado = sender.currentTitle {
             switch selecionado {
-            case "+", "-", "x", "/":
+            case "+", "-", "x", "/", "=":
                 if operacao == ""{
                     self.total = Int(labelResultado.text!)!
                 } else {
-                    performCalc()
+                    performCalc(Int(labelResultado.text!)!, operacao)
                 }
                 operacao = selecionado
+                contaNova = true
+                labelResultado.text = String(total)
             default:
-                if labelResultado.text == "0" {
+                if labelResultado.text == "0" || contaNova {
                     labelResultado.text = ""
                 }
+                contaNova = false
                 labelResultado.text! += selecionado
             }
         }
@@ -36,7 +40,16 @@ class ViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    func performCalc(){
+    func performCalc(_ valorAtual: Int, _ operacao: String){
+        if operacao == "+" {
+            self.total += valorAtual
+        } else if operacao == "-" {
+            self.total -= valorAtual
+        } else if operacao == "x" {
+            self.total *= valorAtual
+        } else if operacao == "/" {
+            self.total /= valorAtual
+        }
         
     }
     
